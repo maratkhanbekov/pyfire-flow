@@ -9,7 +9,29 @@ class FlashcardsFirestoreSchemes:
             'premium': False,
             'title': '',
             'uid': ''
+        },
+        'banner': {
+            'deckUids': [],
+            'imageUrl': '',
+            'subtitle': '',
+            'title': ''
+        },
+        'module': {
+            'banners': [],
+            'deckUids': [],
+            'order': 0,
+            'title': '',
+            'uid': ''
         }
+    }
+
+    colors = {
+        'Greens': ['CEE7D9', 'E7E7CE', 'CEE7CE'],
+        'Purples': ['DCCEE7', 'E7CEE1'],
+        'Oranges': ['F3CDB7'],
+        'Yellows': ['F2E8CF', 'FFEBAD'],
+        'Blues': ['C4E7FD'],
+        'Reds': ['FCC1C3']
     }
 
     def __init__(self):
@@ -30,16 +52,49 @@ class FlashcardsFirestoreSchemes:
             'properties': {
                 'colorHex': {'type': 'string'},
                 'cards': {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": self.schemes['card']
+                    'type': 'array',
+                    'items': {
+                        'type': 'object',
+                        'properties': self.schemes['card']
                     }
                 },
                 'premium': {'type': 'boolean'},
                 'title': {'type': 'string'},
                 'uid': {'type': 'string'}
             }
+        }
+
+        self.schemes['banner'] = {
+            'deckUids': {
+                    'type': 'array',
+                    'items': {
+                        'type': 'object',
+                        'properties': {'type', 'string'}
+                    }
+                },
+            'imageUrl': {'type': 'string'},
+            'subtitle': {'type': 'string'},
+            'title': {'type': 'string'}
+        }
+
+        self.schemes['module'] = {
+            'banners': {
+                    'type': 'array',
+                    'items': {
+                        'type': 'object',
+                        'properties': self.schemes['banner']
+                    }
+                },
+            'deckUids': {
+                    'type': 'array',
+                    'items': {
+                        'type': 'object',
+                        'properties': {'type', 'string'}
+                    }
+                },
+            'order': {'type': 'number'},
+            'title': {'type': 'string'},
+            'uid': {'type': 'string'}
         }
 
     def get_scheme(self, key):

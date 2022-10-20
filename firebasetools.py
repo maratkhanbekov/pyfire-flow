@@ -11,27 +11,25 @@ class FirebaseTools:
 
         self.credentials = service_account.Credentials.from_service_account_file(path_to_credentials)
         self.storage_client = storage.Client(credentials=self.credentials)
-        self.bucket = self.storage_client.bucket(firebase_admin.storage.bucket().name)
+        self.bucket_name = firebase_admin.storage.bucket().name
+        self.bucket = self.storage_client.bucket(self.bucket_name)
 
         self.firedb = firebase_admin.firestore.client()
 
         logging.info(f"{self.__class__.__name__} successfully initialized")
 
-    def upload_file(self, source_file_name, destination_blob_name):
+    def upload_file(self, source_file_name, destination_blob_name, token) -> str:
         blob = self.bucket.blob(destination_blob_name)
+        blob.metadata = {"firebaseStorageDownloadTokens": token}
         blob.upload_from_filename(source_file_name)
-        logging.info(f"File {source_file_name} uploaded to {destination_blob_name}.")
+        logging.info(f"File {source_file_name} uploaded as {destination_blob_name} with token {token}.")
 
-    def get_storage_link(self, link):
-        return self.bucket.blob(link).public_url
+        end_point = 'https://firebasestorage.googleapis.com/v0/b'
+        link = f'{end_point}/{self.bucket_name}/o/{destination_blob_name.replace("/", "%2F")}?alt=media&token={token}'
 
-    def get_storage_links(self, links):
-        storage_links = []
-        for link in links:
-            storage_links.append(self.get_storage_link(link))
-        return storage_links
+        return link
 
-    def upload_data(self, data, destination_path):
+    def upload_data(self, data, destination_path) -> None:
         ref = self.firedb.collection(destination_path).document()
         data['uid'] = ref.id
         ref.set(data)
