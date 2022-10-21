@@ -30,7 +30,7 @@ class FlashcardsFirestoreSchemes:
         'Purples': ['DCCEE7', 'E7CEE1'],
         'Oranges': ['F3CDB7'],
         'Yellows': ['F2E8CF', 'FFEBAD'],
-        'Blues': ['C4E7FD'],
+        'Blues': ['C4E7FD', 'A1D7DE'],
         'Reds': ['FCC1C3']
     }
 
@@ -43,8 +43,7 @@ class FlashcardsFirestoreSchemes:
             'dateToRepeat': {'type': 'string'},
             'isWaitingToRepeat': {'type': 'boolean'},
             'previousDateToRepeat': {'type': 'string'},
-            'repetitionCount': {'type': 'number'},
-            'uid': {'type': 'string'}
+            'repetitionCount': {'type': 'number'}
         }
 
         self.schemes['deck'] = {
@@ -65,40 +64,41 @@ class FlashcardsFirestoreSchemes:
         }
 
         self.schemes['banner'] = {
-            'deckUids': {
+                'deckUids': {
                     'type': 'array',
                     'items': {
-                        'type': 'object',
-                        'properties': {'type', 'string'}
+                        'type': 'string'
                     }
                 },
-            'imageUrl': {'type': 'string'},
-            'subtitle': {'type': 'string'},
-            'title': {'type': 'string'}
+                'imageUrl': {'type': 'string'},
+                'subtitle': {'type': 'string'},
+                'title': {'type': 'string'}
         }
 
         self.schemes['module'] = {
-            'banners': {
+            'type': 'object',
+            'properties': {
+                'banners': {
                     'type': 'array',
                     'items': {
                         'type': 'object',
                         'properties': self.schemes['banner']
                     }
                 },
-            'deckUids': {
+                'deckUids': {
                     'type': 'array',
                     'items': {
-                        'type': 'object',
-                        'properties': {'type', 'string'}
+                        'type': 'string'
                     }
                 },
-            'order': {'type': 'number'},
-            'title': {'type': 'string'},
-            'uid': {'type': 'string'}
+                'title': {'type': 'string'},
+                'order': {'type': 'number'},
+                'uid': {'type': 'string'}
+            }
         }
 
     def get_scheme(self, key):
         return self.schemes[key]
 
     def get_instance(self, key):
-        return self.instances[key]
+        return self.instances[key].copy()

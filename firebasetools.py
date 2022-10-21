@@ -29,8 +29,22 @@ class FirebaseTools:
 
         return link
 
-    def upload_data(self, data, destination_path) -> None:
+    def upload_data(self, data, destination_path) -> str:
         ref = self.firedb.collection(destination_path).document()
         data['uid'] = ref.id
         ref.set(data)
-        logging.info(f"Data successfully uploaded to {destination_path}.")
+        logging.info(f"Data successfully uploaded to {destination_path} with UID: {ref.id}")
+        return ref.id
+
+    def delete_collections(self, path, batch_size):
+        ref = self.firedb.collection(path)
+        docs = ref.limit(batch_size).stream()
+        deleted = 0
+
+        for doc in docs:
+            doc.reference.delete()
+            deleted += 1
+            logging.info(f'{doc.id} deleted.')
+
+        if deleted >= batch_size:
+            return self.delete_collections(path, batch_size)
