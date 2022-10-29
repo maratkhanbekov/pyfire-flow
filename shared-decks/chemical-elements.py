@@ -53,6 +53,6 @@ if __name__ == '__main__':
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
     # upload_deck_media_files()
     # upload_deck_content('decks-user-ydj1i4cjKnVVJAMVGqDAPNLFqvD2', scale_mode=False)
-    upload_deck_content('decks', scale_mode=False)
+    upload_deck_content('decks', scale_mode=True)
 
 

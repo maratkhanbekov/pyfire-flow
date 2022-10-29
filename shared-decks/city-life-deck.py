@@ -31,7 +31,7 @@ def upload_deck_content(destination_path, scale_mode=False):
     shared_deck = SharedDeck(content_file_path=f'{path_from_current_folder_to_contents}/content.xlsx')
 
     if not scale_mode:
-        shared_deck.content = shared_deck.content.head(3)
+        shared_deck.content = shared_deck.content.head(65)
 
     flashcards_firestore_schemes = FlashcardsFirestoreSchemes()
     deck_instance = flashcards_firestore_schemes.get_instance(key='deck')
@@ -52,6 +52,5 @@ if __name__ == '__main__':
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
     # upload_deck_media_files()
     # upload_deck_content('decks-user-ydj1i4cjKnVVJAMVGqDAPNLFqvD2', scale_mode=False)
-    upload_deck_content('decks', scale_mode=False)
-
-
+    # upload_deck_content('decks-user-zOoszb5Eyue2jyIiCWOBwb14QPu2', scale_mode=False)
+    upload_deck_content('decks', scale_mode=True)

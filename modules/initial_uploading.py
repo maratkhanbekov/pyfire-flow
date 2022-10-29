@@ -13,18 +13,19 @@ def upload_first_layer(destination_path='modules'):
     banner_instance1['title'] = 'Learn Geography: World Flags'
     banner_instance1['subtitle'] = 'Solid pack with 260 world flags'
     banner_instance1['imageUrl'] = 'https://firebasestorage.googleapis.com/v0/b/flashcards-76b34.appspot.com/o/system%2Fshared-deck%2Fworld_flags.pdf?alt=media&token=32b1f7a1-35c4-43b6-b96d-707f210e35c4'
-    banner_instance1['deckUids'] = ['ryCxyNU70l7hSPvwzhgk']
+    banner_instance1['deckUids'] = ['zP6Mm9W6BXpR0VpjPqX9']
 
+    # Landmarks
     banner_instance2 = flashcards_firestore_schemes.get_instance(key='banner')
     banner_instance2['title'] = 'Learn Geography: Landmarks'
     banner_instance2['subtitle'] = 'We collected 60 prominent world landmarks inside'
     banner_instance2[
         'imageUrl'] = 'https://firebasestorage.googleapis.com/v0/b/flashcards-76b34.appspot.com/o/system%2Fshared-deck%2Flandmarks.pdf?alt=media&token=36ef9060-bc7b-4ce6-a340-3287cf27de97'
-    banner_instance2['deckUids'] = ['7uYz0ANu04iGrR2CiX8Q']
+    banner_instance2['deckUids'] = ['AKA3Z66h0AccrIqnZpTz']
 
     module_instance['title'] = 'Most popular'
     module_instance['order'] = 1
-    module_instance['deckUids'] = ['ibEwupshkVzeHtwGgMvM', 'OubyMO68aPYk7ZuRuSOf']
+    module_instance['deckUids'] = ['EVV6fGnTJE9R2W8qfdlO', 'poaZZzQXTib9TP6P4Pl6']
     module_instance['banners'] = [banner_instance1, banner_instance2]
 
     validate(instance=module_instance, schema=flashcards_firestore_schemes.schemes['module'])
@@ -41,7 +42,7 @@ def upload_second_layer(destination_path='modules'):
 
     module_instance['title'] = 'Learn Spanish'
     module_instance['order'] = 2
-    module_instance['deckUids'] = ['XsiSEaLtiXla4eGsXQwB', 'Lq8ExKGNGQs2EvqoR5q8']
+    module_instance['deckUids'] = ['YHDw3g7R0sZxuWi8Ri5S', 'qERyGOXcyHlvocehEFCM']
 
     validate(instance=module_instance, schema=flashcards_firestore_schemes.schemes['module'])
     logging.info("JSON instances are valid")
@@ -59,7 +60,7 @@ def upload_third_layer(destination_path='modules'):
     banner_instance1['title'] = 'Learn Chemistry: Periodic Elements'
     banner_instance1['subtitle'] = 'This deck will help you visualize and rememeber every chemical element'
     banner_instance1['imageUrl'] = 'https://firebasestorage.googleapis.com/v0/b/flashcards-76b34.appspot.com/o/system%2Fshared-deck%2Fperiodic_elements.pdf?alt=media&token=2a0a7c4c-f5a7-4671-bd2a-e2e3d8fdc9c4'
-    banner_instance1['deckUids'] = ['XpWIZ6Wp0ANzmbVaf9nk']
+    banner_instance1['deckUids'] = ['26hH4osXSNCHH7ulchUm']
 
     module_instance['title'] = 'Learn Science'
     module_instance['order'] = 3
@@ -83,6 +84,6 @@ if __name__ == '__main__':
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
     # clean_modules()
-    upload_first_layer()
+    # upload_first_layer()
     # upload_second_layer()
-    # upload_third_layer()
+    upload_third_layer()

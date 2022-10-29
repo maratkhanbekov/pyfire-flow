@@ -1,5 +1,5 @@
 import firebase_admin
-from firebase_admin import credentials, storage, db, firestore
+from firebase_admin import credentials, storage, db, firestore, messaging
 from google.cloud import storage
 from google.oauth2 import service_account
 import logging
@@ -48,3 +48,34 @@ class FirebaseTools:
 
         if deleted >= batch_size:
             return self.delete_collections(path, batch_size)
+
+    def get_documents_from_collection(self, collection_name) -> list:
+        docs_stream = self.firedb.collection(collection_name).stream()
+        doc_list = [doc.to_dict() for doc in docs_stream]
+        logging.info(f'{len(doc_list)} docs retrieved.')
+        return doc_list
+
+    def get_documents_from_collections(self, collection_prefix, list_collections_uids) -> dict:
+        out = {}
+        for uid in list_collections_uids:
+            docs_stream = self.firedb.collection(f'{collection_prefix}{uid}').stream()
+            out[uid] = [doc.to_dict() for doc in docs_stream]
+        logging.info(f'Docs from {collection_prefix}... retrieved.')
+        return out
+
+    def update_document_data(self, collection_name, document_name, data_to_update):
+        col_ref = self.firedb.collection(collection_name)
+        doc_ref = col_ref.document(document_name)
+        doc_ref.update(data_to_update)
+        logging.info(f'All {collection_name} -> {document_name} updated.')
+
+
+def send_multicast_message(title, body, tokens):
+    message = messaging.MulticastMessage(
+        notification=messaging.Notification(
+            title=title,
+            body=body
+        ),
+        tokens=tokens,
+    )
+    messaging.send_multicast(message)

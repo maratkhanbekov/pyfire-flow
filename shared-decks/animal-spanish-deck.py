@@ -32,13 +32,14 @@ def upload_deck_content(destination_path, scale_mode=False):
     shared_deck = SharedDeck(content_file_path=f'{path_from_current_folder_to_contents}/content.xlsx')
 
     if not scale_mode:
-        shared_deck.content = shared_deck.content.head(3)
+        shared_deck.content = shared_deck.content.head(30)
 
     flashcards_firestore_schemes = FlashcardsFirestoreSchemes()
     deck_instance = flashcards_firestore_schemes.get_instance(key='deck')
     deck_instance['title'] = 'Learn Spanish: Top 100 Animals'
     deck_instance['colorHex'] = flashcards_firestore_schemes.colors['Yellows'][1]
     deck_instance['cards'] = shared_deck.generate_cards_with_image_on_front_side(col_with_text='back-text-eng')
+    deck_instance['premium'] = True
 
     # Upload the content
     validate(instance=deck_instance, schema=flashcards_firestore_schemes.schemes['deck'])
@@ -53,10 +54,15 @@ if __name__ == '__main__':
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
     # upload_deck_media_files()
     # upload_deck_content('decks-user-ydj1i4cjKnVVJAMVGqDAPNLFqvD2', scale_mode=False)
-    # upload_deck_content('decks', scale_mode=False)
+    upload_deck_content('decks', scale_mode=True)
+    # upload_deck_content('decks-user-zOoszb5Eyue2jyIiCWOBwb14QPu2', scale_mode=False)
 
-    firebase_tools = FirebaseTools(path_to_credentials='../flashcards-76b34-firebase-adminsdk-pnckt-daab1ad148.json',
-                                   storage_bucket='flashcards-76b34.appspot.com')
-    firebase_tools.delete_collections(path='decks-user-ydj1i4cjKnVVJAMVGqDAPNLFqvD2', batch_size=100)
+
+    # firebase_tools = FirebaseTools(path_to_credentials='../flashcards-76b34-firebase-adminsdk-pnckt-daab1ad148.json',
+    #                                storage_bucket='flashcards-76b34.appspot.com')
+    # firebase_tools.delete_collections(path='decks-user-zOoszb5Eyue2jyIiCWOBwb14QPu2', batch_size=100)
+
+
+
 
 

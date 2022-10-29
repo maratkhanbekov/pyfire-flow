@@ -38,6 +38,7 @@ def upload_deck_content(destination_path, scale_mode=False):
     deck_instance['title'] = 'Learn English: 200+ Food Cards'
     deck_instance['colorHex'] = flashcards_firestore_schemes.colors['Purples'][0]
     deck_instance['cards'] = shared_deck.generate_cards_with_image_on_front_side(col_with_text='back-text-eng')
+    deck_instance['premium'] = True
 
     # Upload the content
     validate(instance=deck_instance, schema=flashcards_firestore_schemes.schemes['deck'])
@@ -53,7 +54,7 @@ if __name__ == '__main__':
 
     # upload_deck_media_files()
     # upload_deck_content('decks-user-ydj1i4cjKnVVJAMVGqDAPNLFqvD2', scale_mode=False)
-    # upload_deck_content('decks', scale_mode=False)
+    upload_deck_content('decks', scale_mode=True)
 
 
 
